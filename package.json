@@ -1,0 +1,12 @@
+{
+  "name": "daymark-todo-ai-test",
+  "version": "1.0.0",
+  "private": true,
+  "type": "module",
+  "description": "Адаптивный To-Do List с сохранением в localStorage. Тестовое задание The Digital.",
+  "scripts": {
+    "dev": "node scripts/serve.mjs",
+    "test": "node --test tests/*.test.mjs"
+  },
+  "engines": { "node": ">=18" }
+}

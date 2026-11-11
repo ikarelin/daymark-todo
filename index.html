@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="ru">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="theme-color" content="#f6f7fb" />
+    <meta name="description" content="Daymark — аккуратный список задач, который сохраняется в браузере." />
+    <title>Daymark — Список задач</title>
+    <link rel="stylesheet" href="./src/styles.css" />
+    <script src="./src/app.mjs" type="module" defer></script>
+  </head>
+  <body>
+    <div class="page-shell">
+      <header class="topbar" aria-label="Шапка приложения">
+        <a href="./" class="brand" aria-label="Daymark — главная">
+          <span class="brand-mark" aria-hidden="true">✓</span>
+          <span>daymark<span class="brand-dot">.</span></span>
+        </a>
+        <div class="topbar-right"><span class="online-pulse" aria-hidden="true"></span> Ваши задачи хранятся в браузере</div>
+      </header>
+
+      <main class="workspace">
+        <section class="hero" aria-labelledby="main-title">
+          <div class="hero-eyebrow"><span class="eyebrow-star" aria-hidden="true">✦</span> ПРОСТРАНСТВО ДЛЯ ВАШИХ ПЛАНОВ</div>
+          <div class="hero-grid">
+            <div>
+              <p class="greeting" id="greeting">Добрый день!</p>
+              <h1 id="main-title">Делайте больше.<br /><span class="heading-accent">Без лишнего шума.</span></h1>
+              <p class="hero-sub">Простой способ держать важное перед глазами и получать удовольствие от каждого выполненного пункта.</p>
+            </div>
+            <div class="hero-art" aria-hidden="true">
+              <div class="art-orbit art-orbit-one"></div>
+              <div class="art-orbit art-orbit-two"></div>
+              <div class="art-card art-card-back"><span></span><i></i><i></i></div>
+              <div class="art-card art-card-front"><b>✓</b><span></span><span></span></div>
+              <div class="art-spark art-spark-one">✦</div>
+              <div class="art-spark art-spark-two">✧</div>
+            </div>
+          </div>
+          <div class="hero-footer"><span class="calendar-icon" aria-hidden="true">▦</span><time id="today"></time><span class="hero-divider"></span> Маленькие шаги — большие результаты.</div>
+        </section>
+
+        <section class="main-grid" aria-label="Рабочая область">
+          <div class="main-column">
+            <section class="composer panel" aria-labelledby="new-task-title">
+              <div class="section-heading"><div><p class="overline">НОВЫЙ ПУНКТ</p><h2 id="new-task-title">Что сегодня в планах?</h2></div><div class="section-icon" aria-hidden="true">＋</div></div>
+              <form id="task-form" novalidate>
+                <label class="sr-only" for="task-input">Название новой задачи</label>
+                <input id="task-input" type="text" maxlength="160" placeholder="Например, подготовить презентацию…" autocomplete="off" required />
+                <button type="submit" class="add-button"><span aria-hidden="true">＋</span> Добавить</button>
+              </form>
+              <p class="input-hint">Нажмите Enter, чтобы быстро добавить задачу.</p>
+            </section>
+
+            <section class="tasks-panel panel" aria-labelledby="task-list-heading">
+              <div class="tasks-topline"><div><p class="overline">ВАШ ФОКУС</p><h2 id="task-list-heading">Мои задачи <span id="task-count" class="task-count">0 задач</span></h2></div></div>
+              <div class="filters" role="group" aria-label="Фильтр задач">
+                <button type="button" class="filter filter--active" data-filter="all" aria-pressed="true">Все задачи</button>
+                <button type="button" class="filter" data-filter="active" aria-pressed="false">В работе</button>
+                <button type="button" class="filter" data-filter="completed" aria-pressed="false">Готово</button>
+              </div>
+              <ul id="task-list" class="task-list" aria-label="Список задач"></ul>
+              <div class="empty-state" id="empty-state">
+                <div class="empty-illustration" aria-hidden="true"><span>✓</span><i>✦</i></div>
+                <h3 id="empty-title">Планы начинаются здесь</h3>
+                <p id="empty-description">Добавьте первую задачу и сделайте день продуктивнее.</p>
+              </div>
+              <div class="tasks-bottom"><button id="clear-completed" type="button" class="clear-button" hidden>Очистить выполненные <span aria-hidden="true">↗</span></button></div>
+            </section>
+          </div>
+
+          <aside class="sidebar" aria-label="Статистика задач">
+            <section class="stats-panel panel" aria-labelledby="overview-title">
+              <div class="side-heading"><p class="overline">ОБЗОР ДНЯ</p><h2 id="overview-title">Ваш прогресс</h2></div>
+              <div class="progress-ring" aria-hidden="true"><span class="ring-circle">↗</span></div>
+              <div class="progress-caption"><span>Движемся к цели</span><strong id="progress-label">0% выполнено</strong></div>
+              <div class="progress-track" role="progressbar" aria-valuemin="0" aria-valuemax="100" aria-valuenow="0" aria-label="Прогресс выполнения задач"><div class="progress-fill" id="progress-bar"></div></div>
+              <div class="stat-rows">
+                <div class="stat-row"><span class="stat-dot stat-dot-all"></span><span>Всего задач</span><strong id="stat-total">0</strong></div>
+                <div class="stat-row"><span class="stat-dot stat-dot-pending"></span><span>В работе</span><strong id="stat-remaining">0</strong></div>
+                <div class="stat-row"><span class="stat-dot stat-dot-done"></span><span>Выполнено</span><strong id="stat-completed">0</strong></div>
+              </div>
+            </section>
+            <section class="note-panel" aria-label="Мотивация"><div class="note-icon" aria-hidden="true">✳</div><p>«Большие дела состоят из маленьких шагов.»</p><span>Просто продолжайте двигаться.</span></section>
+            <p class="sidebar-footer">Без регистрации · Без облака · Только ваши задачи</p>
+          </aside>
+        </section>
+      </main>
+      <footer class="footer"><span>daymark. — меньше хаоса, больше результата</span><span>Сделано с вниманием к деталям ♡</span></footer>
+    </div>
+    <div class="sr-only" id="live-region" role="status" aria-live="polite" aria-atomic="true"></div>
+  </body>
+</html>
